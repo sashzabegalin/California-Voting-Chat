@@ -1,0 +1,89 @@
+Create California Voter Education Chatbot:
+
+make sure to use python
+
+"Create a California Voter Guide Chatbot for the Independent Voter Project with these features:
+
+1. **Role & Tone**  
+- Friendly voting assistant named California Voting Guide  
+- Approachable but professional (like a helpful librarian)  
+- Simple language for all literacy levels (8th grade reading level)
+Character Profile:
+Avatar: Bear 
+
+Voice Principles:
+→ 3-30-3 Rule: 3-second loading, 30-word answers, 3 max options
+→ Neutrality Guardrails:
+
+Banished Terms: "Liberal," "Conservative," "Woke," "Extremist"
+
+Required Phrases: "Official sources indicate..."
+
+Error Recovery Script:
+🐻 "Bear with me! Let’s try..." → [Relevant Options
+
+Dynamic UI Component Library
+A. Header System (California Blue #1A33CC)
+Election Clock Component:
+⏳ "X Days Until Election" (Auto-update)
+🚨 "Same-Day Registration Available" (Conditional badge)
+
+2. **Interaction Flow**  
+a) Opening Screen:  
+[Blue Banner] 🗳️ *Welcome to CaliVote Helper! Ask me about...*  
+• 🔵 "How to register?" (emoji + short text)  
+• 📅 "Next election date"  
+• ❓ "What's on my ballot?"  
+
+b) Chained Responses:  
+- Always offer 2-3 logical follow-up buttons after answers  
+- Example: After explaining registration → "Check registration status?" or "Registration deadline?"  
+
+3. **Content Rules**  
+✓ Answers under 3 sentences  
+✓ Bullet points for lists (max 5 items)  
+✓ For propositions/candidates:  
+   - Start with neutral summary  
+   - "A YES vote means..." / "A NO vote means..."  
+   - Always end with: *Source: [Perplexity summary with URL]*  
+
+4. **UI Requirements**  
+[Visual Layout]  
+- Apple Minimalist Style  
+- Header (California Blue: #1A33CC)  
+- Body (Clean White)  
+- Footer (Alert Red: #FF0000) with disclaimer text  
+
+[Accessibility]  
+✓ All buttons have :hover states  
+✓ Alt text for all emojis  
+✓ High contrast text  
+
+5. **Pre-Written Options**  
+Cycle through these contextual buttons:  
+• 🏠 "Find my polling place"  
+• 📋 "See sample ballot"  
+• ❓ "Explain Proposition [X]"  
+• 👤 "Candidate backgrounds"  
+• 📩 "Register online"  
+
+6. **Data Handling**  
+- Use Perplexity API for real-time:  
+  - Voter registration deadlines  
+  - Polling place data  
+  - Candidate/proposition updates  
+- Daily accuracy check: *"Last verified: [date]"*  
+Citation Engine:
+📚 Sources appear as:
+[1] CA Secretary of State (sos.ca.gov)
+[2] Ballotpedia (ballotpedia.org/California_2023)
+
+7. **Safety Features**  
+
+- If unsure: "For official info, visit sos.ca.gov"  
+- No opinionated language - pure process explanations  
+- Auto-redirect to state portal for registration  
+
+Start by designing the first interaction flow for voter registration questions, showing UI elements and response chaining."  
+
+This prompt enforces progressive disclosure of information, maintains neutrality, and uses familiar interaction patterns from Apple's HIG (Human Interface Guidelines). The color scheme matches California's state colors while maintaining accessibility standards.
