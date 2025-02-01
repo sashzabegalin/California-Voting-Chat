@@ -26,7 +26,7 @@ class ChatManager {
     addWelcomeMessage() {
         const welcomeMessage = {
             role: 'assistant',
-            content: "Hi there! 🐻 I'm Bear Bot, your friendly California voting guide!"
+            content: "🐻 I'm Bear Bot, your friendly California voting guide!"
         };
         this.displayMessage(welcomeMessage);
     }
@@ -60,10 +60,12 @@ class ChatManager {
                     content: data.message,
                     citations: data.citations
                 });
+                // Extract and display follow-up questions
+                this.updateFollowUpQuestions(data.message);
             } else {
                 this.displayMessage({
                     role: 'assistant',
-                    content: "Bear with me! 🐻\n\nLet's try another question. Sometimes even bears need a moment to think!"
+                    content: "Whoops! 🐻\n\nEven bears have their off moments. Let's try another question!"
                 });
             }
         } catch (error) {
@@ -73,6 +75,42 @@ class ChatManager {
                 role: 'assistant',
                 content: "Oops! 🐻\n\nI'm having trouble connecting right now. Please try another question while I sort things out!"
             });
+        }
+    }
+
+    updateFollowUpQuestions(message) {
+        // Look for the follow-up questions section
+        const followUpSection = message.split(/Would you like to know more about:|What else would you like to know\?/i)[1];
+
+        if (followUpSection) {
+            // Extract questions that start with emoji
+            const questions = followUpSection.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.match(/^[^\w\s]/) && line.length > 2); // Lines starting with emoji
+
+            if (questions.length > 0) {
+                // Clear existing quick options
+                this.quickOptions.innerHTML = '';
+
+                // Add new follow-up questions as buttons
+                questions.forEach(question => {
+                    const emoji = question.match(/^[^\w\s]+/)[0].trim();
+                    const text = question.replace(emoji, '').trim();
+                    const button = document.createElement('button');
+                    button.className = 'option-btn';
+                    button.dataset.question = text;
+                    button.dataset.emoji = emoji;
+                    button.textContent = `${emoji} ${text}`;
+                    this.quickOptions.appendChild(button);
+                });
+
+                // Animate new options
+                this.quickOptions.style.opacity = '0';
+                requestAnimationFrame(() => {
+                    this.quickOptions.style.transition = 'opacity 0.3s ease-in';
+                    this.quickOptions.style.opacity = '1';
+                });
+            }
         }
     }
 
@@ -102,7 +140,6 @@ class ChatManager {
     }
 
     formatContent(content) {
-        // Add line breaks after each sentence for better readability
         return content
             .replace(/\. /g, '.\n\n')
             .replace(/\n\n\n+/g, '\n\n') // Remove excessive line breaks
