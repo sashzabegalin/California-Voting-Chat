@@ -56,7 +56,7 @@ def get_chat_response(user_message: str) -> Dict[str, Any]:
             {"role": "user", "content": user_message}
         ],
         "temperature": 0.7,
-        "max_tokens": 150,
+        "max_tokens": 500,
         "top_p": 0.9,
         "stream": False
     }
