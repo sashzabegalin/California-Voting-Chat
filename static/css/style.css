@@ -130,17 +130,26 @@ header h1 {
     transform: translateY(-2px);
 }
 
+/* Footer styles */
 footer {
     background-color: var(--alert-red);
     color: var(--white);
-    text-align: center;
     padding: 1rem;
     margin-top: auto;
 }
 
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
 footer a {
     color: var(--white);
+    text-decoration: underline;
 }
+
 
 /* Language button styles */
 .language-btn {
@@ -203,6 +212,9 @@ footer a {
     .language-btn {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
+    }
+    .footer-content {
+        padding: 0 0.5rem;
     }
 }
 
