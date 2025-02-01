@@ -88,26 +88,34 @@ header h1 {
     padding: 1.5rem;
 }
 
+/* Quick options styling */
 .quick-options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.8rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.2rem;
+    margin-top: 2rem;
+    padding: 0.5rem;
 }
 
 .option-btn {
     background-color: var(--light-gray);
     border: none;
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 1rem;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 1.1rem;
     text-align: left;
+    line-height: 1.4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
 }
 
 .option-btn:hover {
     background-color: #e0e0e0;
+    transform: translateY(-2px);
 }
 
 footer {
@@ -162,6 +170,7 @@ footer a {
     }
 }
 
+/* Responsive adjustments */
 @media (max-width: 600px) {
     .chat-container {
         margin: 1rem;
@@ -169,6 +178,13 @@ footer a {
 
     .quick-options {
         grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .option-btn {
+        padding: 1rem 1.2rem;
+        font-size: 1rem;
     }
 }
 
