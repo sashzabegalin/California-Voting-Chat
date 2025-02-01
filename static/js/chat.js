@@ -73,7 +73,7 @@ class ChatManager {
         return content
             .replace(/\. /g, '.\n\n')
             .replace(/• /g, '\n• ')
-            .replace(/\n\n\n+/g, '\n\n'); // Remove excessive line breaks
+            .replace(/\n\n\n+/g, '\n\n') // Remove excessive line breaks
     }
 
     displayMessage(message) {
@@ -81,21 +81,41 @@ class ChatManager {
         messageDiv.classList.add('message');
         messageDiv.classList.add(message.role === 'user' ? 'user-message' : 'bot-message');
 
-        const content = document.createElement('div');
-        content.classList.add('message-content');
+        if (message.role === 'assistant') {
+            // Add bot header
+            const header = document.createElement('div');
+            header.classList.add('bot-header');
+            header.innerHTML = '🐻 Cal Bear Chat';
+            messageDiv.appendChild(header);
 
-        // Format the content for better readability
-        const formattedContent = this.formatContent(message.content);
-        content.textContent = formattedContent;
-        messageDiv.appendChild(content);
+            // Create content container
+            const contentContainer = document.createElement('div');
+            contentContainer.classList.add('bot-content');
 
-        if (message.citations && message.citations.length > 0) {
-            const citations = document.createElement('div');
-            citations.classList.add('citations');
-            citations.innerHTML = `<small>📚 Sources: ${message.citations.map(cite => 
-                `<a href="${cite}" target="_blank" rel="noopener noreferrer">${new URL(cite).hostname}</a>`
-            ).join(' • ')}</small>`;
-            messageDiv.appendChild(citations);
+            // Add message content
+            const content = document.createElement('div');
+            content.classList.add('message-content');
+            const formattedContent = this.formatContent(message.content);
+            content.textContent = formattedContent;
+            contentContainer.appendChild(content);
+
+            // Add citations if available
+            if (message.citations && message.citations.length > 0) {
+                const citations = document.createElement('div');
+                citations.classList.add('citations');
+                citations.innerHTML = `<small>📚 Sources: ${message.citations.map(cite => 
+                    `<a href="${cite}" target="_blank" rel="noopener noreferrer">${new URL(cite).hostname}</a>`
+                ).join(' • ')}</small>`;
+                contentContainer.appendChild(citations);
+            }
+
+            messageDiv.appendChild(contentContainer);
+        } else {
+            // User message
+            const content = document.createElement('div');
+            content.classList.add('message-content');
+            content.textContent = message.content;
+            messageDiv.appendChild(content);
         }
 
         this.messageContainer.appendChild(messageDiv);

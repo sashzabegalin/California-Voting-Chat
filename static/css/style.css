@@ -4,6 +4,7 @@
     --white: #ffffff;
     --light-gray: #f5f5f5;
     --dark-gray: #333333;
+    --bot-header-bg: #f0f7ff;
 }
 
 * {
@@ -54,7 +55,6 @@ header h1 {
 
 .message {
     margin-bottom: 1.5rem;
-    padding: 1.2rem;
     border-radius: 12px;
     max-width: 85%;
     line-height: 1.5;
@@ -64,14 +64,28 @@ header h1 {
     background-color: var(--california-blue);
     color: var(--white);
     margin-left: auto;
+    padding: 1.2rem;
 }
 
 .bot-message {
     background-color: var(--white);
     margin-right: auto;
-    padding: 1.5rem;
-    max-width: 85%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.bot-header {
+    background-color: var(--bot-header-bg);
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px 12px 0 0;
+    font-weight: 600;
+    color: var(--california-blue);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bot-content {
+    padding: 1.5rem;
 }
 
 .quick-options {
@@ -168,4 +182,10 @@ footer a {
 
 .message-content li {
     margin-bottom: 0.5rem;
+}
+
+.highlight {
+    background-color: #fff3cd;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
 }
