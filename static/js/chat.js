@@ -1,25 +1,17 @@
 class ChatManager {
     constructor() {
         this.messageContainer = document.getElementById('chat-messages');
-        this.userInput = document.getElementById('user-input');
-        this.sendButton = document.getElementById('send-btn');
         this.quickOptions = document.getElementById('quick-options');
-        
+
         this.setupEventListeners();
         this.addWelcomeMessage();
     }
 
     setupEventListeners() {
-        this.sendButton.addEventListener('click', () => this.sendMessage());
-        this.userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.sendMessage();
-        });
-        
         this.quickOptions.addEventListener('click', (e) => {
             if (e.target.classList.contains('option-btn')) {
                 const question = e.target.dataset.question;
-                this.userInput.value = question;
-                this.sendMessage();
+                this.handleQuestion(question);
             }
         });
     }
@@ -27,18 +19,14 @@ class ChatManager {
     addWelcomeMessage() {
         const welcomeMessage = {
             role: 'assistant',
-            content: "Hi! I'm your California Voting Guide. How can I help you today?"
+            content: "Welcome to the California Voter Guide. Please select a topic to learn more."
         };
         this.displayMessage(welcomeMessage);
     }
 
-    async sendMessage() {
-        const message = this.userInput.value.trim();
-        if (!message) return;
-
+    async handleQuestion(question) {
         // Display user message
-        this.displayMessage({ role: 'user', content: message });
-        this.userInput.value = '';
+        this.displayMessage({ role: 'user', content: question });
 
         try {
             const response = await fetch('/chat', {
@@ -46,11 +34,11 @@ class ChatManager {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message })
+                body: JSON.stringify({ message: question })
             });
 
             const data = await response.json();
-            
+
             if (data.success) {
                 this.displayMessage({
                     role: 'assistant',
@@ -60,7 +48,7 @@ class ChatManager {
             } else {
                 this.displayMessage({
                     role: 'assistant',
-                    content: "Bear with me! Let's try another question."
+                    content: "I apologize, but I'm having trouble accessing that information. Please try another question."
                 });
             }
         } catch (error) {
@@ -94,3 +82,8 @@ class ChatManager {
         this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
     }
 }
+
+// Initialize the chat manager when the document is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new ChatManager();
+});
