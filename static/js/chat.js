@@ -17,7 +17,8 @@ class ChatManager {
             const button = e.target.closest('.option-btn');
             if (button) {
                 const question = button.dataset.question;
-                this.sendMessage(question);
+                const emoji = button.dataset.emoji;
+                this.sendMessage(`${emoji} ${question}`);
             }
         });
     }
@@ -25,7 +26,7 @@ class ChatManager {
     addWelcomeMessage() {
         const welcomeMessage = {
             role: 'assistant',
-            content: "Hi there! 🐻\n\nI'm Bear Bot, your friendly California voting guide! I'm here to help you learn about voting, elections, and everything in between. What would you like to know?"
+            content: "Hi there! 🐻 I'm Bear Bot, your friendly California voting guide!"
         };
         this.displayMessage(welcomeMessage);
     }
@@ -36,6 +37,9 @@ class ChatManager {
         // Display user message
         this.displayMessage({ role: 'user', content: message });
 
+        // Show thinking indicator
+        this.showThinkingIndicator();
+
         try {
             const response = await fetch('/chat', {
                 method: 'POST',
@@ -44,6 +48,9 @@ class ChatManager {
                 },
                 body: JSON.stringify({ message })
             });
+
+            // Remove thinking indicator
+            this.removeThinkingIndicator();
 
             const data = await response.json();
 
@@ -61,10 +68,36 @@ class ChatManager {
             }
         } catch (error) {
             console.error('Error:', error);
+            this.removeThinkingIndicator();
             this.displayMessage({
                 role: 'assistant',
                 content: "Oops! 🐻\n\nI'm having trouble connecting right now. Please try another question while I sort things out!"
             });
+        }
+    }
+
+    showThinkingIndicator() {
+        const thinkingDiv = document.createElement('div');
+        thinkingDiv.classList.add('message', 'bot-message', 'thinking');
+
+        const header = document.createElement('div');
+        header.classList.add('bot-header');
+        header.innerHTML = '🐻 Bear Bot';
+        thinkingDiv.appendChild(header);
+
+        const content = document.createElement('div');
+        content.classList.add('bot-content');
+        content.innerHTML = '🤔 Thinking...';
+        thinkingDiv.appendChild(content);
+
+        this.messageContainer.appendChild(thinkingDiv);
+        this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
+    }
+
+    removeThinkingIndicator() {
+        const thinking = this.messageContainer.querySelector('.thinking');
+        if (thinking) {
+            thinking.remove();
         }
     }
 
