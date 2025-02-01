@@ -103,9 +103,18 @@ class ChatManager {
 
     formatContent(content) {
         // Add line breaks after each sentence for better readability
-        return content
+        content = content
             .replace(/\. /g, '.\n\n')
             .replace(/\n\n\n+/g, '\n\n') // Remove excessive line breaks
+
+        // Parse and allow specific HTML tags for formatting
+        const div = document.createElement('div');
+        div.textContent = content;
+        const formattedContent = div.innerHTML
+            .replace(/&lt;b&gt;/g, '<b>')
+            .replace(/&lt;\/b&gt;/g, '</b>');
+
+        return formattedContent;
     }
 
     displayMessage(message) {
@@ -127,8 +136,7 @@ class ChatManager {
             // Add message content
             const content = document.createElement('div');
             content.classList.add('message-content');
-            const formattedContent = this.formatContent(message.content);
-            content.textContent = formattedContent;
+            content.innerHTML = this.formatContent(message.content);
             contentContainer.appendChild(content);
 
             // Add citations if available

@@ -204,3 +204,15 @@ footer a {
     50% { opacity: 1; }
     100% { opacity: 0.6; }
 }
+.message-content b {
+    font-weight: 600;
+    color: var(--california-blue);
+}
+
+.bot-message .message-content b {
+    color: var(--california-blue);
+}
+
+.user-message .message-content b {
+    color: var(--white);
+}

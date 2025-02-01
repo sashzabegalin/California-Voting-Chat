@@ -31,7 +31,7 @@ def get_chat_response(user_message: str) -> Dict[str, Any]:
     🎯 ONLY provide California-specific voting information
     🎯 If unsure about California details, say "I can only share verified California voting information"
     🎯 Always cite official California sources
-    🎯 No markdown formatting (**, -, #, etc.)
+    🎯 To make text bold, use HTML tags: <b>Important text</b> instead of **text**
 
     Banned words: Liberal, Conservative, Woke, Extremist
 
@@ -39,9 +39,9 @@ def get_chat_response(user_message: str) -> Dict[str, Any]:
     "I can help with that! 🐻
 
     Here's how to vote in California:
-    🗳️ Register online at RegisterToVote.ca.gov
-    📅 Check registration deadline on ca.gov
-    📍 Find your polling place through the CA Secretary of State website"
+    🗳️ Register online at <b>RegisterToVote.ca.gov</b>
+    📅 Check registration deadline on <b>ca.gov</b>
+    📍 Find your polling place through the <b>CA Secretary of State</b> website"
     """
 
     headers = {
