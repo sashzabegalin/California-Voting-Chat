@@ -25,7 +25,7 @@ class ChatManager {
     addWelcomeMessage() {
         const welcomeMessage = {
             role: 'assistant',
-            content: "🐻 Welcome! Please select a topic you'd like to learn more about."
+            content: "🐻 Welcome to California Voter Guide!\n\nI'm your friendly voting assistant. Please select a topic you'd like to learn more about."
         };
         this.displayMessage(welcomeMessage);
     }
@@ -50,22 +50,30 @@ class ChatManager {
             if (data.success) {
                 this.displayMessage({
                     role: 'assistant',
-                    content: "🐻 " + data.message,
+                    content: data.message,
                     citations: data.citations
                 });
             } else {
                 this.displayMessage({
                     role: 'assistant',
-                    content: "🐻 Bear with me! Let's try another question."
+                    content: "🐻 Bear with me! Let's try another question.\n\nSometimes even bears need a moment to think!"
                 });
             }
         } catch (error) {
             console.error('Error:', error);
             this.displayMessage({
                 role: 'assistant',
-                content: "🐻 I'm having trouble connecting right now. Please try again later."
+                content: "🐻 I'm having trouble connecting right now.\n\nPlease try another question while I sort things out!"
             });
         }
+    }
+
+    formatContent(content) {
+        // Add line breaks after each sentence for better readability
+        return content
+            .replace(/\. /g, '.\n\n')
+            .replace(/• /g, '\n• ')
+            .replace(/\n\n\n+/g, '\n\n'); // Remove excessive line breaks
     }
 
     displayMessage(message) {
@@ -75,15 +83,18 @@ class ChatManager {
 
         const content = document.createElement('div');
         content.classList.add('message-content');
-        content.textContent = message.content;
+
+        // Format the content for better readability
+        const formattedContent = this.formatContent(message.content);
+        content.textContent = formattedContent;
         messageDiv.appendChild(content);
 
         if (message.citations && message.citations.length > 0) {
             const citations = document.createElement('div');
             citations.classList.add('citations');
-            citations.innerHTML = `<small>Sources: ${message.citations.map(cite => 
+            citations.innerHTML = `<small>📚 Sources: ${message.citations.map(cite => 
                 `<a href="${cite}" target="_blank" rel="noopener noreferrer">${new URL(cite).hostname}</a>`
-            ).join(', ')}</small>`;
+            ).join(' • ')}</small>`;
             messageDiv.appendChild(citations);
         }
 

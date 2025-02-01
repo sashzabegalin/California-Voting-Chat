@@ -53,10 +53,11 @@ header h1 {
 }
 
 .message {
-    margin-bottom: 1rem;
-    padding: 0.8rem;
-    border-radius: 8px;
-    max-width: 80%;
+    margin-bottom: 1.5rem;
+    padding: 1.2rem;
+    border-radius: 12px;
+    max-width: 85%;
+    line-height: 1.5;
 }
 
 .user-message {
@@ -68,8 +69,9 @@ header h1 {
 .bot-message {
     background-color: var(--white);
     margin-right: auto;
-    padding: 1rem;
-    max-width: 80%;
+    padding: 1.5rem;
+    max-width: 85%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .quick-options {
@@ -133,21 +135,37 @@ footer a {
 }
 
 .citations {
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
     color: #666;
+    border-top: 1px solid #eee;
+    padding-top: 0.8rem;
 }
 
 .citations a {
     color: var(--california-blue);
     text-decoration: none;
+    margin-right: 0.5rem;
 }
 
 .citations a:hover {
     text-decoration: underline;
 }
 
-
 .message-content {
+    margin-bottom: 0.8rem;
+    white-space: pre-line;
+}
+
+.message-content p {
+    margin-bottom: 0.8rem;
+}
+
+.message-content ul {
+    margin: 0.8rem 0;
+    padding-left: 1.5rem;
+}
+
+.message-content li {
     margin-bottom: 0.5rem;
 }
