@@ -2,6 +2,7 @@ class ChatManager {
     constructor() {
         this.messageContainer = document.getElementById('chat-messages');
         this.quickOptions = document.getElementById('quick-options');
+        this.currentLanguage = 'en';
 
         if (!this.messageContainer || !this.quickOptions) {
             console.error('Required DOM elements not found');
@@ -16,17 +17,25 @@ class ChatManager {
         this.quickOptions.addEventListener('click', (e) => {
             const button = e.target.closest('.option-btn');
             if (button) {
-                const question = button.dataset.question;
                 const emoji = button.dataset.emoji;
+                const question = this.currentLanguage === 'en' ? 
+                    button.dataset.question : 
+                    button.dataset.questionEs;
                 this.sendMessage(`${emoji} ${question}`);
             }
+        });
+
+        window.addEventListener('languageChanged', (event) => {
+            this.currentLanguage = event.detail.language;
         });
     }
 
     addWelcomeMessage() {
         const welcomeMessage = {
             role: 'assistant',
-            content: "Hi there! 🐻 I'm Bear Bot, your friendly California voting guide!"
+            content: this.currentLanguage === 'en' ?
+                "🐻 I'm Bear Bot, your friendly California voting guide!" :
+                "🐻 ¡Soy Bot Oso, tu amigable guía electoral de California!"
         };
         this.displayMessage(welcomeMessage);
     }
@@ -34,10 +43,7 @@ class ChatManager {
     async sendMessage(message) {
         if (!message) return;
 
-        // Display user message
         this.displayMessage({ role: 'user', content: message });
-
-        // Show thinking indicator
         this.showThinkingIndicator();
 
         try {
@@ -46,12 +52,13 @@ class ChatManager {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message })
+                body: JSON.stringify({ 
+                    message,
+                    language: this.currentLanguage
+                })
             });
 
-            // Remove thinking indicator
             this.removeThinkingIndicator();
-
             const data = await response.json();
 
             if (data.success) {
@@ -61,17 +68,23 @@ class ChatManager {
                     citations: data.citations
                 });
             } else {
+                const errorMessage = this.currentLanguage === 'en' ?
+                    "Bear with me! 🐻\n\nLet's try another question!" :
+                    "¡Un momento! 🐻\n\n¡Intentemos otra pregunta!";
                 this.displayMessage({
                     role: 'assistant',
-                    content: "Bear with me! 🐻\n\nLet's try another question. Sometimes even bears need a moment to think!"
+                    content: errorMessage
                 });
             }
         } catch (error) {
             console.error('Error:', error);
             this.removeThinkingIndicator();
+            const errorMessage = this.currentLanguage === 'en' ?
+                "Oops! 🐻\n\nI'm having trouble connecting right now. Please try again!" :
+                "¡Ups! 🐻\n\nEstoy teniendo problemas de conexión. ¡Por favor, inténtalo de nuevo!";
             this.displayMessage({
                 role: 'assistant',
-                content: "Oops! 🐻\n\nI'm having trouble connecting right now. Please try another question while I sort things out!"
+                content: errorMessage
             });
         }
     }
@@ -82,12 +95,12 @@ class ChatManager {
 
         const header = document.createElement('div');
         header.classList.add('bot-header');
-        header.innerHTML = '🐻 Bear Bot';
+        header.innerHTML = translations[this.currentLanguage].botName;
         thinkingDiv.appendChild(header);
 
         const content = document.createElement('div');
         content.classList.add('bot-content');
-        content.innerHTML = '🤔 Thinking...';
+        content.innerHTML = translations[this.currentLanguage].thinking;
         thinkingDiv.appendChild(content);
 
         this.messageContainer.appendChild(thinkingDiv);
@@ -102,10 +115,9 @@ class ChatManager {
     }
 
     formatContent(content) {
-        // Add line breaks after each sentence for better readability
         return content
             .replace(/\. /g, '.\n\n')
-            .replace(/\n\n\n+/g, '\n\n') // Remove excessive line breaks
+            .replace(/\n\n\n+/g, '\n\n');
     }
 
     displayMessage(message) {
@@ -114,28 +126,24 @@ class ChatManager {
         messageDiv.classList.add(message.role === 'user' ? 'user-message' : 'bot-message');
 
         if (message.role === 'assistant') {
-            // Add bot header
             const header = document.createElement('div');
             header.classList.add('bot-header');
-            header.innerHTML = '🐻 Bear Bot';
+            header.innerHTML = translations[this.currentLanguage].botName;
             messageDiv.appendChild(header);
 
-            // Create content container
             const contentContainer = document.createElement('div');
             contentContainer.classList.add('bot-content');
 
-            // Add message content
             const content = document.createElement('div');
             content.classList.add('message-content');
             const formattedContent = this.formatContent(message.content);
             content.textContent = formattedContent;
             contentContainer.appendChild(content);
 
-            // Add citations if available
             if (message.citations && message.citations.length > 0) {
                 const citations = document.createElement('div');
                 citations.classList.add('citations');
-                citations.innerHTML = `<small>📚 Sources: ${message.citations.map((cite, index) => 
+                citations.innerHTML = `<small>📚 ${this.currentLanguage === 'en' ? 'Sources' : 'Fuentes'}: ${message.citations.map((cite, index) => 
                     `[${index + 1}] <a href="${cite}" target="_blank" rel="noopener noreferrer">${new URL(cite).hostname}</a>`
                 ).join(' • ')}</small>`;
                 contentContainer.appendChild(citations);
@@ -143,7 +151,6 @@ class ChatManager {
 
             messageDiv.appendChild(contentContainer);
         } else {
-            // User message
             const content = document.createElement('div');
             content.classList.add('message-content');
             content.textContent = message.content;
@@ -155,7 +162,6 @@ class ChatManager {
     }
 }
 
-// Initialize the chat manager when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new ChatManager();
 });

@@ -9,7 +9,13 @@
 </head>
 <body>
     <header>
-        <h1>🗳️ California Voter Guide</h1>
+        <div class="header-content">
+            <h1>🗳️ California Voter Guide</h1>
+            <button id="language-toggle" class="language-btn">
+                <span class="lang-text">English</span>
+                <i class="fas fa-language"></i>
+            </button>
+        </div>
     </header>
 
     <main>
@@ -19,22 +25,40 @@
             </div>
 
             <div class="quick-options" id="quick-options">
-                <button class="option-btn" data-question="How do I register to vote?" data-emoji="🔵">
+                <button class="option-btn" 
+                    data-question="How do I register to vote?" 
+                    data-question-es="¿Cómo me registro para votar?" 
+                    data-emoji="🔵">
                     🔵 How to register?
                 </button>
-                <button class="option-btn" data-question="When is the next election?" data-emoji="📅">
+                <button class="option-btn" 
+                    data-question="When is the next election?" 
+                    data-question-es="¿Cuándo es la próxima elección?" 
+                    data-emoji="📅">
                     📅 Next election date
                 </button>
-                <button class="option-btn" data-question="What's on my ballot?" data-emoji="❓">
+                <button class="option-btn" 
+                    data-question="What's on my ballot?" 
+                    data-question-es="¿Qué hay en mi boleta electoral?" 
+                    data-emoji="❓">
                     ❓ What's on my ballot?
                 </button>
-                <button class="option-btn" data-question="Where is my polling place?" data-emoji="🏠">
+                <button class="option-btn" 
+                    data-question="Where is my polling place?" 
+                    data-question-es="¿Dónde está mi lugar de votación?" 
+                    data-emoji="🏠">
                     🏠 Find my polling place
                 </button>
-                <button class="option-btn" data-question="Can I see a sample ballot?" data-emoji="📋">
+                <button class="option-btn" 
+                    data-question="Can I see a sample ballot?" 
+                    data-question-es="¿Puedo ver una boleta de muestra?" 
+                    data-emoji="📋">
                     📋 See sample ballot
                 </button>
-                <button class="option-btn" data-question="What are the voter ID requirements?" data-emoji="🆔">
+                <button class="option-btn" 
+                    data-question="What are the voter ID requirements?" 
+                    data-question-es="¿Cuáles son los requisitos de identificación para votar?" 
+                    data-emoji="🆔">
                     🆔 Voter ID requirements
                 </button>
             </div>
@@ -46,5 +70,6 @@
     </footer>
 
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
 </body>
 </html>

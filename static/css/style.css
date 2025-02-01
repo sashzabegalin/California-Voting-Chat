@@ -122,6 +122,38 @@ footer a {
     color: var(--white);
 }
 
+/* Add these styles for the language toggle button */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.language-btn {
+    background: var(--white);
+    color: var(--california-blue);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.language-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.language-btn i {
+    font-size: 1.2rem;
+}
+
 /* Accessibility Improvements */
 @media (prefers-reduced-motion: reduce) {
     * {

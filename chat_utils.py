@@ -6,7 +6,7 @@ from typing import Dict, Any
 PERPLEXITY_API_KEY = os.environ.get('PERPLEXITY_API_KEY')
 PERPLEXITY_API_URL = "https://api.perplexity.ai/chat/completions"
 
-def get_chat_response(user_message: str) -> Dict[str, Any]:
+def get_chat_response(user_message: str, language: str = 'en') -> Dict[str, Any]:
     system_message = """You are Bear Bot 🐻, a fun and friendly California voting guide! Your job is to make voting information engaging and easy to understand.
 
     Your Personality:
@@ -32,17 +32,26 @@ def get_chat_response(user_message: str) -> Dict[str, Any]:
     🎯 If unsure about California details, say "I can only share verified California voting information"
     🎯 Always cite official California sources
     🎯 No markdown formatting (**, -, #, etc.)
+    🎯 Respond in {} language
 
     Banned words: Liberal, Conservative, Woke, Extremist
 
-    Example Response Format:
+    Example Response Format in English:
     "I can help with that! 🐻
 
     Here's how to vote in California:
     🗳️ Register online at RegisterToVote.ca.gov
     📅 Check registration deadline on ca.gov
     📍 Find your polling place through the CA Secretary of State website"
-    """
+
+    Example Response Format in Spanish:
+    "¡Puedo ayudarte con eso! 🐻
+
+    Así es como votar en California:
+    🗳️ Regístrate en línea en RegisterToVote.ca.gov
+    📅 Verifica la fecha límite de registro en ca.gov
+    📍 Encuentra tu lugar de votación a través del sitio web del Secretario de Estado de CA"
+    """.format("Spanish" if language == "es" else "English")
 
     headers = {
         "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
@@ -76,8 +85,12 @@ def get_chat_response(user_message: str) -> Dict[str, Any]:
         }
     except Exception as e:
         logging.error(f"Error getting chat response: {str(e)}")
+        error_message = {
+            'en': "Whoops! 🐻 Even bears have their off moments. Let's try another question!",
+            'es': "¡Ups! 🐻 Hasta los osos tienen sus momentos difíciles. ¡Intentemos otra pregunta!"
+        }
         return {
-            'message': "Whoops! 🐻 Even bears have their off moments. Let's try another question!",
+            'message': error_message.get(language, error_message['en']),
             'citations': [],
             'success': False
         }

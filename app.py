@@ -17,10 +17,12 @@ def index():
 def chat():
     try:
         user_message = request.json.get('message')
+        language = request.json.get('language', 'en')
+
         if not user_message:
             return jsonify({'error': 'No message provided'}), 400
 
-        response = get_chat_response(user_message)
+        response = get_chat_response(user_message, language)
         return jsonify(response)
     except Exception as e:
         logging.error(f"Error in chat endpoint: {str(e)}")
