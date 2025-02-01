@@ -62,7 +62,8 @@ class LanguageManager {
         options.forEach(button => {
             const questionKey = this.currentLanguage === 'en' ? 'data-question' : 'data-question-es';
             const text = button.getAttribute(questionKey);
-            button.textContent = text;
+            const emoji = button.getAttribute('data-emoji');
+            button.textContent = `${emoji} ${text}`;
         });
 
         // Update footer

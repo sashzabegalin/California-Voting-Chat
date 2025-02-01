@@ -27,6 +27,8 @@ class ChatManager {
 
         window.addEventListener('languageChanged', (event) => {
             this.currentLanguage = event.detail.language;
+            this.messageContainer.innerHTML = ''; // Clear existing messages
+            this.addWelcomeMessage(); // Add new welcome message in current language
         });
     }
 
