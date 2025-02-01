@@ -68,6 +68,8 @@ header h1 {
 .bot-message {
     background-color: var(--white);
     margin-right: auto;
+    padding: 1rem;
+    max-width: 80%;
 }
 
 .quick-options {
@@ -128,4 +130,24 @@ footer a {
         --california-blue: #0000FF;
         --alert-red: #FF0000;
     }
+}
+
+.citations {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.citations a {
+    color: var(--california-blue);
+    text-decoration: none;
+}
+
+.citations a:hover {
+    text-decoration: underline;
+}
+
+
+.message-content {
+    margin-bottom: 0.5rem;
 }

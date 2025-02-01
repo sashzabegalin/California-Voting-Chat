@@ -25,7 +25,7 @@ class ChatManager {
     addWelcomeMessage() {
         const welcomeMessage = {
             role: 'assistant',
-            content: "Welcome! Please select a topic you'd like to learn more about."
+            content: "🐻 Welcome! Please select a topic you'd like to learn more about."
         };
         this.displayMessage(welcomeMessage);
     }
@@ -50,20 +50,20 @@ class ChatManager {
             if (data.success) {
                 this.displayMessage({
                     role: 'assistant',
-                    content: data.message,
+                    content: "🐻 " + data.message,
                     citations: data.citations
                 });
             } else {
                 this.displayMessage({
                     role: 'assistant',
-                    content: "Bear with me! Let's try another question."
+                    content: "🐻 Bear with me! Let's try another question."
                 });
             }
         } catch (error) {
             console.error('Error:', error);
             this.displayMessage({
                 role: 'assistant',
-                content: "I'm having trouble connecting right now. Please try again later."
+                content: "🐻 I'm having trouble connecting right now. Please try again later."
             });
         }
     }
@@ -73,7 +73,8 @@ class ChatManager {
         messageDiv.classList.add('message');
         messageDiv.classList.add(message.role === 'user' ? 'user-message' : 'bot-message');
 
-        const content = document.createElement('p');
+        const content = document.createElement('div');
+        content.classList.add('message-content');
         content.textContent = message.content;
         messageDiv.appendChild(content);
 
@@ -81,7 +82,7 @@ class ChatManager {
             const citations = document.createElement('div');
             citations.classList.add('citations');
             citations.innerHTML = `<small>Sources: ${message.citations.map(cite => 
-                `<a href="${cite}" target="_blank">${new URL(cite).hostname}</a>`
+                `<a href="${cite}" target="_blank" rel="noopener noreferrer">${new URL(cite).hostname}</a>`
             ).join(', ')}</small>`;
             messageDiv.appendChild(citations);
         }

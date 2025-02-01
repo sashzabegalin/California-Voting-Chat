@@ -29,10 +29,13 @@ def get_chat_response(user_message: str) -> Dict[str, Any]:
     }
 
     try:
+        if not PERPLEXITY_API_KEY:
+            raise ValueError("Perplexity API key not found")
+
         response = requests.post(PERPLEXITY_API_URL, headers=headers, json=data)
         response.raise_for_status()
         result = response.json()
-        
+
         return {
             'message': result['choices'][0]['message']['content'],
             'citations': result.get('citations', []),
