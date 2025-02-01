@@ -22,16 +22,28 @@ body {
     flex-direction: column;
 }
 
+/* Update the header styles */
 header {
     background-color: var(--california-blue);
     color: var(--white);
     padding: 1rem;
-    text-align: center;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 header h1 {
     font-size: 1.5rem;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .chat-container {
@@ -130,16 +142,7 @@ footer a {
     color: var(--white);
 }
 
-/* Add these styles for the language toggle button */
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
+/* Language button styles */
 .language-btn {
     background: var(--white);
     color: var(--california-blue);
@@ -152,6 +155,8 @@ footer a {
     gap: 0.5rem;
     font-size: 0.9rem;
     transition: background-color 0.3s;
+    margin-left: 1rem;
+    flex-shrink: 0;
 }
 
 .language-btn:hover {
@@ -170,7 +175,7 @@ footer a {
     }
 }
 
-/* Responsive adjustments */
+/* Add responsive adjustments for mobile */
 @media (max-width: 600px) {
     .chat-container {
         margin: 1rem;
@@ -185,6 +190,19 @@ footer a {
     .option-btn {
         padding: 1rem 1.2rem;
         font-size: 1rem;
+    }
+
+    .header-content {
+        padding: 0 0.5rem;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    .language-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
     }
 }
 
