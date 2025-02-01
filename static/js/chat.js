@@ -1,25 +1,17 @@
 class ChatManager {
     constructor() {
         this.messageContainer = document.getElementById('chat-messages');
-        this.userInput = document.getElementById('user-input');
-        this.sendButton = document.getElementById('send-btn');
         this.quickOptions = document.getElementById('quick-options');
-        
+
         this.setupEventListeners();
         this.addWelcomeMessage();
     }
 
     setupEventListeners() {
-        this.sendButton.addEventListener('click', () => this.sendMessage());
-        this.userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.sendMessage();
-        });
-        
         this.quickOptions.addEventListener('click', (e) => {
             if (e.target.classList.contains('option-btn')) {
                 const question = e.target.dataset.question;
-                this.userInput.value = question;
-                this.sendMessage();
+                this.sendMessage(question);
             }
         });
     }
@@ -27,18 +19,16 @@ class ChatManager {
     addWelcomeMessage() {
         const welcomeMessage = {
             role: 'assistant',
-            content: "Hi! I'm your California Voting Guide. How can I help you today?"
+            content: "Welcome! Please select a topic you'd like to learn more about."
         };
         this.displayMessage(welcomeMessage);
     }
 
-    async sendMessage() {
-        const message = this.userInput.value.trim();
+    async sendMessage(message) {
         if (!message) return;
 
         // Display user message
         this.displayMessage({ role: 'user', content: message });
-        this.userInput.value = '';
 
         try {
             const response = await fetch('/chat', {
@@ -50,7 +40,7 @@ class ChatManager {
             });
 
             const data = await response.json();
-            
+
             if (data.success) {
                 this.displayMessage({
                     role: 'assistant',
