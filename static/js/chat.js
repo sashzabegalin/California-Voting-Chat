@@ -25,7 +25,7 @@ class ChatManager {
     addWelcomeMessage() {
         const welcomeMessage = {
             role: 'assistant',
-            content: "🐻 Welcome to California Voter Guide!\n\nI'm your friendly voting assistant. Please select a topic you'd like to learn more about."
+            content: "Hi there! 🐻\n\nI'm Bear Bot, your friendly California voting guide! I'm here to help you learn about voting, elections, and everything in between. What would you like to know?"
         };
         this.displayMessage(welcomeMessage);
     }
@@ -56,14 +56,14 @@ class ChatManager {
             } else {
                 this.displayMessage({
                     role: 'assistant',
-                    content: "🐻 Bear with me! Let's try another question.\n\nSometimes even bears need a moment to think!"
+                    content: "Bear with me! 🐻\n\nLet's try another question. Sometimes even bears need a moment to think!"
                 });
             }
         } catch (error) {
             console.error('Error:', error);
             this.displayMessage({
                 role: 'assistant',
-                content: "🐻 I'm having trouble connecting right now.\n\nPlease try another question while I sort things out!"
+                content: "Oops! 🐻\n\nI'm having trouble connecting right now. Please try another question while I sort things out!"
             });
         }
     }
@@ -72,7 +72,6 @@ class ChatManager {
         // Add line breaks after each sentence for better readability
         return content
             .replace(/\. /g, '.\n\n')
-            .replace(/• /g, '\n• ')
             .replace(/\n\n\n+/g, '\n\n') // Remove excessive line breaks
     }
 
@@ -85,7 +84,7 @@ class ChatManager {
             // Add bot header
             const header = document.createElement('div');
             header.classList.add('bot-header');
-            header.innerHTML = '🐻 Cal Bear Chat';
+            header.innerHTML = '🐻 Bear Bot';
             messageDiv.appendChild(header);
 
             // Create content container
@@ -103,8 +102,8 @@ class ChatManager {
             if (message.citations && message.citations.length > 0) {
                 const citations = document.createElement('div');
                 citations.classList.add('citations');
-                citations.innerHTML = `<small>📚 Sources: ${message.citations.map(cite => 
-                    `<a href="${cite}" target="_blank" rel="noopener noreferrer">${new URL(cite).hostname}</a>`
+                citations.innerHTML = `<small>📚 Sources: ${message.citations.map((cite, index) => 
+                    `[${index + 1}] <a href="${cite}" target="_blank" rel="noopener noreferrer">${new URL(cite).hostname}</a>`
                 ).join(' • ')}</small>`;
                 contentContainer.appendChild(citations);
             }
