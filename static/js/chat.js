@@ -3,14 +3,20 @@ class ChatManager {
         this.messageContainer = document.getElementById('chat-messages');
         this.quickOptions = document.getElementById('quick-options');
 
+        if (!this.messageContainer || !this.quickOptions) {
+            console.error('Required DOM elements not found');
+            return;
+        }
+
         this.setupEventListeners();
         this.addWelcomeMessage();
     }
 
     setupEventListeners() {
         this.quickOptions.addEventListener('click', (e) => {
-            if (e.target.classList.contains('option-btn')) {
-                const question = e.target.dataset.question;
+            const button = e.target.closest('.option-btn');
+            if (button) {
+                const question = button.dataset.question;
                 this.sendMessage(question);
             }
         });
@@ -84,3 +90,8 @@ class ChatManager {
         this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
     }
 }
+
+// Initialize the chat manager when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new ChatManager();
+});
